@@ -28,5 +28,6 @@ class User(Base):
     role = Column(SqlEnum(Role), nullable=False) 
 
     campaigns = relationship("Campaign", back_populates="owner")
+    investments = relationship("Investment", back_populates="user")
 
     

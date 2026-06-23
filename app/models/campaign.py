@@ -29,7 +29,10 @@ class Campaign(Base):
     tauxRendement = Column(Float, nullable=False)
     dureRemboursement = Column(Integer, nullable=False)
     owner_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-
+    
+    
+    investments = relationship("Investment", back_populates="campaign")
+    distributions = relationship("Distribution", back_populates="campaign")
     owner = relationship("User", back_populates="campaigns")    
 
 
