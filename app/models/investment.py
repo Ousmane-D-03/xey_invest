@@ -1,0 +1,25 @@
+from sqlalchemy import Column, Integer, String, Date, Enum, ForeignKey
+from sqlalchemy.orm import relationship
+from app.database import Base
+from datetime import datetime
+from enum import Enum
+
+class InvestmentStatus(Enum):
+    EN_ATTENTE = "en_attente"
+    CONFIRME = "confirme"
+    REMBOURSE = "rembourse"
+
+class Investment(Base):
+    __tablename__ = "investments"
+
+    id = Column(Integer, primary_key=True, index=True)
+    nombrePartAchetees = Column(Integer, nullable=False)
+    dateInvestissement = Column(Date, default=datetime.utcnow, nullable=False)
+    statut = Column(Enum(InvestmentStatus), default=InvestmentStatus.EN_ATTENTE, nullable=False)
+    urlContrat = Column(String, nullable=True)
+    referenceTransaction = Column(String, nullable=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    campaign_id = Column(Integer, ForeignKey("campaigns.id"), nullable=False)
+
+    user = relationship("User", back_populates="investments")
+    campaign = relationship("Campaign", back_populates="investments")

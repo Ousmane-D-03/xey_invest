@@ -25,7 +25,7 @@ class User(Base):
     hashed_password = Column(String)
     status = Column(Enum(UserStatus), default=UserStatus.EN_ATTENTE, nullable=False)
     secteur_activite = Column(String, nullable=True) 
-    role = Column(String, nullable=False) 
+    role = Column(Enum(Role), nullable=False) 
 
     campaigns = relationship("Campaign", back_populates="owner")
 

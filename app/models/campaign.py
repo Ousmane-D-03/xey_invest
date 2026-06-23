@@ -28,7 +28,7 @@ class Campaign(Base):
     nombreTotalParts = Column(Integer, nullable=False)
     tauxRendement = Column(Float, nullable=False)
     dureRemboursement = Column(Integer, nullable=False)
-    owner_id = Column(Integer, ForeignKey("project_owners.id"), nullable=False)
+    owner_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 
     owner = relationship("User", back_populates="campaigns")    
 
