@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Enum, Date, Float 
+from sqlalchemy import Column, Integer, String, Enum as SqlEnum , Date, Float 
 from sqlalchemy.orm import relationship
 from app.database import Base
 from datetime import datetime, date
@@ -23,7 +23,7 @@ class Campaign(Base):
     objectifFinancier = Column(Integer, nullable=False)
     dateDebut = Column(Date, nullable=False)
     dateFin = Column(Date, nullable=False)
-    statut = Column(Enum(CampaignStatus), default=CampaignStatus.EN_ATTENTE, nullable=False)
+    statut = Column(SqlEnum(CampaignStatus), default=CampaignStatus.EN_ATTENTE, nullable=False)
     prixUnitairePart = Column(Integer, nullable=False)
     nombreTotalParts = Column(Integer, nullable=False)
     tauxRendement = Column(Float, nullable=False)

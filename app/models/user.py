@@ -1,10 +1,10 @@
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Column, Integer, String, Enum as SqlEnum
 from sqlalchemy.orm import relationship
 from app.database import Base
 from datetime import datetime
 from enum import Enum
 
-class UserStatus(Enum):
+class Status(Enum):
     EN_ATTENTE ="en_attente"
     VALIDE = "valide"
     SUSPENDU = "suspendu"
@@ -23,9 +23,9 @@ class User(Base):
     username = Column(String, unique=True, index=True)
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
-    status = Column(Enum(UserStatus), default=UserStatus.EN_ATTENTE, nullable=False)
+    status = Column(SqlEnum(Status), default=Status.EN_ATTENTE, nullable=False)
     secteur_activite = Column(String, nullable=True) 
-    role = Column(Enum(Role), nullable=False) 
+    role = Column(SqlEnum(Role), nullable=False) 
 
     campaigns = relationship("Campaign", back_populates="owner")
 

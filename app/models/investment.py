@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Date, Enum, ForeignKey
+from sqlalchemy import Column, Integer, String, Date, Enum as SqlEnum, ForeignKey
 from sqlalchemy.orm import relationship
 from app.database import Base
 from datetime import datetime
@@ -15,7 +15,7 @@ class Investment(Base):
     id = Column(Integer, primary_key=True, index=True)
     nombrePartAchetees = Column(Integer, nullable=False)
     dateInvestissement = Column(Date, default=datetime.utcnow, nullable=False)
-    statut = Column(Enum(InvestmentStatus), default=InvestmentStatus.EN_ATTENTE, nullable=False)
+    statut = Column(SqlEnum(InvestmentStatus), default=InvestmentStatus.EN_ATTENTE, nullable=False)
     urlContrat = Column(String, nullable=True)
     referenceTransaction = Column(String, nullable=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
