@@ -3,7 +3,6 @@ from jose import jwt
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 import os
-import jwt
 from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import get_db

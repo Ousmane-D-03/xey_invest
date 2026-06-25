@@ -4,6 +4,8 @@ from app.database import Base
 from datetime import datetime, date
 from enum import Enum
 from sqlalchemy import ForeignKey
+from app.models.investment import Investment
+from app.models.distribution import Distribution
 
 class CampaignStatus(Enum):
     EN_ATTENTE = "en_attente"

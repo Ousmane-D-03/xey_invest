@@ -21,5 +21,5 @@ class Investment(Base):
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     campaign_id = Column(Integer, ForeignKey("campaigns.id"), nullable=False)
 
-    user = relationship("User", back_populates="investments")
     campaign = relationship("Campaign", back_populates="investments")
+    user = relationship("User", back_populates="investments")
