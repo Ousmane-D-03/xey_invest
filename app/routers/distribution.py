@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from app.schemas.distributions import CreateDitribution, DistributionListReponse
+from app.schemas.distributions import CreateDitribution, DistributionListResponse
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.auth import get_current_user
@@ -12,7 +12,7 @@ from app.models.campaign import Campaign
 
 router = APIRouter()
 
-@router.post("/distribution",reponse_model=DistributionListReponse)
+@router.post("/distribution",response_model=DistributionListResponse)
 def create_distribution(distribution: CreateDitribution, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     
     if not current_user:
@@ -33,20 +33,18 @@ def create_distribution(distribution: CreateDitribution, db: Session = Depends(g
     return new_distribution
     
 
-@router.get("/distributions", response_model=List[DistributionListReponse])
+@router.get("/distributions", response_model=List[DistributionListResponse])
 def get_distributions(db: Session = Depends(get_db)):
     distributions = db.query(Distribution).all()
     return distributions 
 
-@router.get("/distributions/{campaign_id}", response_model= List[DistributionStatus])
+@router.get("/distributions/{campaign_id}", response_model= List[DistributionListResponse])
 def get_distribution_by_campaign(campaign_id: int, db: Session = Depends(get_db)):
     distributions = db.query(Distribution).filter(Distribution.campaign_id == campaign_id ).all()
     return distributions
 
-@router.patch("/distributions/{id}/validate", response_class=List[DistributionStatus])
-def validate_distributiion(id: id,db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    #je dois verifier que la somme a distribuer est bien reparties entre le invetisseur en
-    #fonction des part acheter
+@router.patch("/distributions/{id}/validate", response_model=List[DistributionListResponse])
+def validate_distributiion(id: int ,db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
 
     if not current_user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not authenticated")
@@ -64,18 +62,22 @@ def validate_distributiion(id: id,db: Session = Depends(get_db), current_user: U
     if not campaign:
         raise HTTPException(status_code=404, detail="Campaign not found")
 
-
     total_invested_parts = sum(inv.nombrePartAchetees for inv in campaign.investments)
     total_distribution_amount = total_invested_parts * campaign.prixUnitairePart * campaign.tauxRendement
 
-    if total_distribution_amount > 0 :
-        distribution.statut = DistributionStatus.VALIDEE
-    
+    repartition = []
+    for inv in campaign.investments:
+        montant = (inv.nombrePartAchetees / campaign.nombreTotalParts) * total_distribution_amount
+        repartition.append({
+            "user_id": inv.user_id,
+            "montant": montant
+        })
+
 
     db.commit()
     db.refresh(distribution)
     
-    return distribution
+    return {"distribution": distribution, "repartition": repartition}
 
 
 
