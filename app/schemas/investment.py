@@ -32,8 +32,7 @@ class InvestmentListResponse(BaseModel):
         orm_mode = True
 
 class InvestmentDetailResponse(InvestmentListResponse):
-    campaign: dict | None = None
-    user: dict | None = None
+    pass
 
 class InvestmentStatusResponse(BaseModel):
     id: int

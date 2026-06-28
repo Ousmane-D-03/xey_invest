@@ -28,14 +28,14 @@ async def create_investement(investment: CreateInvestment, db: Session = Depends
         raise HTTPException(404, "Campaign not found")
 
 
-    if campaign.statut != CampaignStatus.ACTIVE:
+    if campaign.status != CampaignStatus.ACTIVE:
         raise HTTPException(400, "Campaign is not active")
     
     
     parts_vendues = sum(i.nombrePartAchetees for i in campaign.investments)
 
     
-    parts_restantes = campaign.nombreTotalParts - parts_vendues
+    parts_restantes = campaign.total_parts - parts_vendues
 
     
     if investment.nombrePartAchetees > parts_restantes:

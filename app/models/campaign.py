@@ -19,23 +19,22 @@ class Campaign(Base):
     __tablename__ = "campaigns"
 
     id = Column(Integer, primary_key=True, index=True)
-    titre = Column(String, nullable=False)
+    title = Column(String, nullable=False)
     description = Column(String, nullable=False)
-    secteur = Column(String, nullable=False)
-    objectifFinancier = Column(Integer, nullable=False)
-    dateDebut = Column(Date, nullable=False)
-    dateFin = Column(Date, nullable=False)
-    statut = Column(SqlEnum(CampaignStatus), default=CampaignStatus.EN_ATTENTE, nullable=False)
-    prixUnitairePart = Column(Integer, nullable=False)
-    nombreTotalParts = Column(Integer, nullable=False)
-    tauxRendement = Column(Float, nullable=False)
-    dureRemboursement = Column(Integer, nullable=False)
+    sector = Column(String, nullable=False)
+    goal_amount = Column(Float, nullable=False)
+    start_date = Column(Date, nullable=False)
+    end_date = Column(Date, nullable=False)
+    status = Column(SqlEnum(CampaignStatus), default=CampaignStatus.EN_ATTENTE, nullable=False)
+    unit_price = Column(Float, nullable=False)
+    total_parts = Column(Integer, nullable=False)
+    yield_rate = Column(Float, nullable=False)
+    repayment_duration = Column(Integer, nullable=False)
     owner_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    
-    
+
     investments = relationship("Investment", back_populates="campaign")
     distributions = relationship("Distribution", back_populates="campaign")
-    owner = relationship("User", back_populates="campaigns")    
+    owner = relationship("User", back_populates="campaigns")
 
 
 

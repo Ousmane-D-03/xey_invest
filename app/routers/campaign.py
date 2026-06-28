@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from app.auth import get_current_user
-from app.models.campaign import Campaign
+from app.models.campaign import Campaign, CampaignStatus
 from app.models.user import User, Role
 from sqlalchemy.orm import Session
 from app.database import get_db
@@ -24,15 +24,15 @@ def create_campaign(campaign: CreateCampaign, db: Session = Depends(get_db), cur
         title=campaign.title,
         description=campaign.description,
         goal_amount=campaign.goal_amount,
-        start_date=campaign.start_date,
-        end_date=campaign.end_date,
+        start_date=campaign.start_date.date(),
+        end_date=campaign.end_date.date(),
         sector=campaign.sector,
         unit_price=campaign.unit_price,
         total_parts=campaign.total_parts,
         yield_rate=campaign.yield_rate,
         repayment_duration=campaign.repayment_duration,
         owner_id=current_user.id,
-        statut = "en_attente"
+        status=CampaignStatus.EN_ATTENTE,
     )
     db.add(new_campaign)
     db.commit()
@@ -86,7 +86,7 @@ def update_campaign_status(campaign_id: int, status_update: CampaignStatusUpdate
     if not campaign:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Campaign not found")
     
-    campaign.statut = status_update.statut
+    campaign.status = status_update.status
     db.commit()
     db.refresh(campaign)
-    return {"id": campaign.id, "statut": campaign.statut}
+    return {"id": campaign.id, "status": campaign.status.value}
