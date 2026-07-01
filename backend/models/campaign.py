@@ -1,11 +1,11 @@
 from sqlalchemy import Column, Integer, String, Enum as SqlEnum , Date, Float 
 from sqlalchemy.orm import relationship
-from app.database import Base
+from backend.database import Base
 from datetime import datetime, date
 from enum import Enum
 from sqlalchemy import ForeignKey
-from app.models.investment import Investment
-from app.models.distribution import Distribution
+from backend.models.investment import Investment
+from backend.models.distribution import Distribution
 
 class CampaignStatus(Enum):
     EN_ATTENTE = "en_attente"

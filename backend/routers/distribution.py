@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Depends
-from app.schemas.distributions import CreateDitribution, DistributionListResponse
+from backend.schemas.distributions import CreateDitribution, DistributionListResponse
 from sqlalchemy.orm import Session
-from app.database import get_db
-from app.auth import get_current_user
-from app.models.user import User, Role
+from backend.database import get_db
+from backend.auth import get_current_user
+from backend.models.user import User, Role
 from fastapi import APIRouter, Depends, HTTPException, status
 from datetime import datetime
-from app.models.distribution import DistributionStatus, Distribution
+from backend.models.distribution import DistributionStatus, Distribution
 from typing import List
-from app.models.campaign import Campaign
+from backend.models.campaign import Campaign
 
 router = APIRouter()
 

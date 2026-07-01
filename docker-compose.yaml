@@ -21,7 +21,7 @@ services:
   db:
     image: postgres:16
     ports:
-      - "5432:5432"
+      - "5436:5432"
     restart: always
     environment:
       - POSTGRES_USER=xey_user
@@ -33,7 +33,7 @@ services:
   redis:
     image: redis:6.2-alpine
     ports:
-      - "6379:6379"
+      - "6380:6379"
     restart: always
 
 volumes:

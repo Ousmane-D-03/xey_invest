@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
-from app.models.campaign import CampaignStatus
+from backend.models.campaign import CampaignStatus
 
 
 class CreateCampaign(BaseModel):

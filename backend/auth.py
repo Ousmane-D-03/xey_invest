@@ -5,8 +5,8 @@ from dotenv import load_dotenv
 import os
 from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.database import get_db
-from app.models.user import User
+from backend.database import get_db
+from backend.models.user import User
 from fastapi.security import OAuth2PasswordBearer
 
 load_dotenv()

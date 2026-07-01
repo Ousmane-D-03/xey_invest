@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .database import engine, Base
-from app.routers import auth
-from app.routers import campaign
-from app.routers import investment
-from app.routers import distribution
+from backend.routers import auth
+from backend.routers import campaign
+from backend.routers import investment
+from backend.routers import distribution
 
 def create_tables():
     Base.metadata.create_all(bind=engine)

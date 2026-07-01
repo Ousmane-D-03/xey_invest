@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from app.auth import get_current_user
-from app.models.campaign import Campaign, CampaignStatus
-from app.models.user import User, Role
+from backend.auth import get_current_user
+from backend.models.campaign import Campaign, CampaignStatus
+from backend.models.user import User, Role
 from sqlalchemy.orm import Session
-from app.database import get_db
-from app.schemas.campaigns import CreateCampaign, UpdateCampaign, CampaignListResponse, CampaignDetailResponse, CampaignStatusUpdate, CampaignStatusResponse
+from backend.database import get_db
+from backend.schemas.campaigns import CreateCampaign, UpdateCampaign, CampaignListResponse, CampaignDetailResponse, CampaignStatusUpdate, CampaignStatusResponse
 
 router = APIRouter()
 

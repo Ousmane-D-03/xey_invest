@@ -1,10 +1,10 @@
 from sqlalchemy import Column, Integer, String, Enum as SqlEnum
 from sqlalchemy.orm import relationship
-from app.database import Base
+from backend.database import Base
 from datetime import datetime
 from enum import Enum
-from app.models.investment import InvestmentStatus
-from app.models.campaign import Campaign
+from backend.models.investment import InvestmentStatus
+from backend.models.campaign import Campaign
 
 
 class Status(Enum):

@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from app.database import get_db
-from app.auth import get_current_user
-from app.models.investment import Investment, InvestmentStatus
-from app.models.campaign import Campaign, CampaignStatus
-from app.schemas.investment import InvestmentDetailResponse, InvestmentListByCampaignResponse, InvestmentListByUserResponse, InvestmentListResponse, CreateInvestment
+from backend.database import get_db
+from backend.auth import get_current_user
+from backend.models.investment import Investment, InvestmentStatus
+from backend.models.campaign import Campaign, CampaignStatus
+from backend.schemas.investment import InvestmentDetailResponse, InvestmentListByCampaignResponse, InvestmentListByUserResponse, InvestmentListResponse, CreateInvestment
 from typing import List
-from app.models.user import User, Role
+from backend.models.user import User, Role
 from fastapi import APIRouter, Depends, HTTPException, status
 from datetime import datetime
 

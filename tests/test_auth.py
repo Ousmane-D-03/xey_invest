@@ -1,8 +1,8 @@
 from uuid import uuid4
 
 from fastapi.testclient import TestClient
-from app.main import app
-from app.database import Base, engine
+from backend.main import app
+from backend.database import Base, engine
 
 
 client = TestClient(app)

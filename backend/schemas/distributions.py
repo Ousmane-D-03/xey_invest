@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
-from app.models.distribution import DistributionStatus
+from backend.models.distribution import DistributionStatus
 
 
 class CreateDitribution(BaseModel):

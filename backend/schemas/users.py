@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from app.models.user import Role
+from backend.models.user import Role
 
 class UserCreate(BaseModel):
     username: str

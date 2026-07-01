@@ -1,7 +1,7 @@
 import enum
 from datetime import datetime
 from pydantic import BaseModel
-from app.models.investment import InvestmentStatus
+from backend.models.investment import InvestmentStatus
 
 
 class CreateInvestment(BaseModel):
