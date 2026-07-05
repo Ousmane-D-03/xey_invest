@@ -4,6 +4,9 @@ import Register from './pages/Register'
 import { Home } from 'lucide-react'
 import Navbar from './components/Navbar'
 import Dashboard from './pages/Dashboard';
+import CampaignDetail from './pages/CampaignDetail';
+import CreateCampaign from './pages/CreateCampaign';
+import Admin from './pages/Admin';
 
 function App() {
   return (
@@ -15,6 +18,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register/>} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/campaigns/:id" element={<CampaignDetail />} />
+        <Route path="/campaigns/new" element={<CreateCampaign />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </BrowserRouter>
   )
