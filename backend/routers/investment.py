@@ -67,6 +67,11 @@ async def get_investments_by_user(user_id: int, db: Session = Depends(get_db)):
     investments = db.query(Investment).filter(Investment.user_id == user_id).all()
     return investments
 
+@router.get("/investments/me")
+def get_my_investments(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    investments = db.query(Investment).filter(Investment.user_id == current_user.id).all()
+    return investments
+
 @router.get("/investments/campaign/{campaign_id}", response_model=List[InvestmentListByCampaignResponse])
 async def get_investments_by_campaign(campaign_id: int, db: Session = Depends(get_db)):
     investments = db.query(Investment).filter(Investment.campaign_id == campaign_id).all()
