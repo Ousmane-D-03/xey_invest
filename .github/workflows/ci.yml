@@ -24,9 +24,13 @@ jobs:
         ports:
           - 5432:5432
         env:
-          POSTGRES_USER: xey_user
-          POSTGRES_PASSWORD: Xeyinvest01.
-          POSTGRES_DB: xey_invest
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          ALGORITHM: HS256
+          ACCESS_TOKEN_EXPIRE_MINUTES : 30
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -48,9 +52,7 @@ jobs:
           pip install -r backend/requirements.txt
         
       - name: Run backend tests
-        run: |
-          export DATABASE_URL=postgresql://xey_user:Xeyinvest01.@localhost:5432/xey_invest
-          pytest tests/ --maxfail=1 --disable-warnings -q
+        run: pytest tests/ --maxfail=1 --disable-warnings -q
 
   frontend_ci:
     runs-on: ubuntu-latest
