@@ -18,6 +18,10 @@ jobs:
 
   backend_ci:
     runs-on: ubuntu-latest
+    env:
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }} 
     services:
       postgres:
         image: postgres:16
@@ -27,10 +31,7 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          ALGORITHM: HS256
-          ACCESS_TOKEN_EXPIRE_MINUTES : 30
+
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
