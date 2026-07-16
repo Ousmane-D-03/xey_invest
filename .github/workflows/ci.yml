@@ -103,7 +103,7 @@ jobs:
           push: true
           tags: |
             ${{ env.REGISTRY }}/${{ secrets.DOCKER_USERNAME }}/xey_backend:latest
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_BACKEND }}:xey_backend:${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_BACKEND }}:xey_backend${{ github.sha }}
 
       - name: Build et Push Frontend (en mode serveur statique Nginx)
         uses: docker/build-push-action@v5
@@ -113,7 +113,7 @@ jobs:
           push: true
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_FRONTEND }}:latest
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_FRONTEND }}:xey_frontend:${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_FRONTEND }}:xey_frontend${{ github.sha }}
 
         
       
