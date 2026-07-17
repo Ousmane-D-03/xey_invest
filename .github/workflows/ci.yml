@@ -53,6 +53,11 @@ jobs:
 
       - name: Run backend tests
         run: pytest tests/ --maxfail=1 --disable-warnings -q
+      
+      - name: Run Bandit (SAST)
+        run: |
+          pip install bandit
+          bandit -r backend/ -ll --exit-zero
 
   frontend_ci:
     runs-on: ubuntu-latest
@@ -82,8 +87,22 @@ jobs:
           name: frontend-dist
           path: frontend/dist
 
+  security:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  
+
+    - name: Run Gitleaks
+      uses: gitleaks/gitleaks-action@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+
   docker_build:
-    needs: [backend_ci, frontend_ci]
+    needs: [backend_ci, frontend_ci, security]
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
@@ -115,4 +134,14 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:frontend-latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:frontend-${{ github.sha }}
+      
+      - name: Run Trivy (scan image Docker)
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:backend-latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:frontend-latest
+          format: table
+          exit-code: 0
+          severity: HIGH,CRITICAL
 
