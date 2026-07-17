@@ -134,20 +134,20 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:frontend-latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:frontend-${{ github.sha }}
       
-      - name: Run Trivy (scan image Docker)
-        uses: aquasecurity/trivy-action@master
+      - name: Run Trivy (scan backend image)
+        uses: aquasecurity/trivy-action@0.24.0
         with:
-          image-ref: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:backend-latest
+          scan-type: image
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:backend-latest
           format: table
           exit-code: 0
           severity: HIGH,CRITICAL
-        
-      - name: Run Trivy (scan image Docker)
-        uses: aquasecurity/trivy-action@master
+
+      - name: Run Trivy (scan frontend image)
+        uses: aquasecurity/trivy-action@0.24.0
         with:
-          image-ref: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:frontend-latest
+          scan-type: image
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:frontend-latest
           format: table
           exit-code: 0
           severity: HIGH,CRITICAL
